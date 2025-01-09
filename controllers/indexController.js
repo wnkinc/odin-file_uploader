@@ -6,7 +6,7 @@ async function indexGET(req, res) {
 
   res.render("index", {
     title: "Home Page",
-    // user: req.user,
+    user: req.user,
     // messages: messages,
   });
 }

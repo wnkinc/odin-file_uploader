@@ -1,5 +1,5 @@
 // signUpController.js
-const db = require("../db/queries");
+// const db = require("../db/queries");
 const passport = require("../config/passport");
 const genPassword = require("../config/passwordUtils").genPassword;
 const { validationResult } = require("../config/express-validator");
