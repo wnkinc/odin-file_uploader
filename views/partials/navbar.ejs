@@ -1,0 +1,24 @@
+<!-- views/partials/navbar.ejs -->
+<nav class="navbar">
+  <ul class="navbar-list">
+    <li class="navbar-item navLeft">
+      <a href="/" class="navbar-link">Home</a>
+    </li>
+    <div class="navRight">
+      <% if (user) { %>
+      <li class="navbar-item">
+        <a href="/message" class="navbar-link">Message</a>
+      </li>
+      <% } else { %>
+      <li class="navbar-item">
+        <a href="/sign-up" class="navbar-link">Sign-Up</a>
+      </li>
+      <% } %>
+      <li class="navbar-item">
+        <a href="/login" class="navbar-link"
+          ><%= user ? "Logout" : "Login" %></a
+        >
+      </li>
+    </div>
+  </ul>
+</nav>

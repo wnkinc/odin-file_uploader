@@ -1,0 +1,17 @@
+<!-- views/index.ejs  -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <!-- <link rel="stylesheet" href="/styles.css" /> -->
+  </head>
+  <body>
+    <div class="middle">
+      <%- include('./partials/navbar') %>
+      <br />
+      <h1><%= title %></h1>
+      <br />
+    </div>
+    <%- include('partials/footer.ejs') %>
+  </body>
+</html>

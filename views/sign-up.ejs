@@ -1,0 +1,90 @@
+<!-- views/sign-up.ejs  -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <!-- <link rel="stylesheet" href="/styles.css" /> -->
+  </head>
+  <body>
+    <%- include('./partials/navbar') %>
+    <br />
+    <h1><%= title %></h1>
+    <br />
+    <section class="sign-up">
+      <h2 class="section-title">
+        Sign up to see authors and dates of messages
+      </h2>
+      <%- include("partials/errors.ejs") %>
+      <form action="/sign-up" method="POST" class="sign-up-form">
+        <label for="firstName" class="form-label">First Name:</label>
+        <input
+          type="text"
+          id="firstName"
+          name="firstName"
+          value="<%= data ? data.firstName : '' %>"
+          required
+          class="form-input"
+        />
+
+        <label for="lastName" class="form-label">Last Name:</label>
+        <input
+          type="text"
+          id="lastName"
+          name="lastName"
+          value="<%= data ? data.lastName : '' %>"
+          required
+          class="form-input"
+        />
+
+        <label for="username" class="form-label">Username:</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          value="<%= data ? data.username : '' %>"
+          required
+          class="form-input"
+        />
+
+        <label for="email" class="form-label">Email:</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          value="<%= data ? data.email : '' %>"
+          required
+          class="form-input"
+        />
+
+        <label for="password" class="form-label">Password:</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          value="<%= data ? data.password : '' %>"
+          required
+          class="form-input"
+        />
+
+        <label for="password" class="form-label">Confirm Password:</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          name="confirmPassword"
+          value="<%= data ? data.password : '' %>"
+          required
+          class="form-input"
+        />
+
+        <!-- Admin Checkbox -->
+        <label for="admin" class="form-label">Admin:</label>
+        <input type="checkbox" id="admin" name="admin" class="form-input" />
+        <br />
+
+        <button type="submit" class="form-button">Submit</button>
+      </form>
+    </section>
+    <br />
+    <%- include('partials/footer.ejs') %>
+  </body>
+</html>
