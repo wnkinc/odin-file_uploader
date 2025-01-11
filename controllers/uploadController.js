@@ -1,5 +1,4 @@
 // controllers/uploadController.js
-// const { validationResult } = require("../config/express-validator");
 
 async function uploadGET(req, res) {
   res.render("upload", {
@@ -9,26 +8,37 @@ async function uploadGET(req, res) {
   });
 }
 
-// async function messagePOST(req, res) {
-//   const errors = validationResult(req);
+async function uploadPOST(req, res) {
+  try {
+    if (!req.file) {
+      // Handle the case where no file was uploaded
+      return res.render("upload", {
+        title: "Upload File",
+        user: req.user,
+        errors: ["No file was uploaded. Please try again."],
+      });
+    }
 
-//   const { title, message } = req.body;
+    // File upload successful
+    return res.render("upload", {
+      title: "Upload File",
+      user: req.user,
+      errors: [],
+      message: "File uploaded successfully!",
+    });
+  } catch (err) {
+    console.error("Error uploading file:", err);
 
-//   if (!errors.isEmpty()) {
-//     return res.render("message", {
-//       title: "Create New Message",
-//       user: req.user,
-//       errors: errors.array(),
-//       data: { title, message },
-//     });
-//   }
-
-//   await db.insertMessage(title, message, req.user.id);
-
-//   await res.redirect("/");
-// }
+    // Handle errors
+    return res.render("upload", {
+      title: "Upload File",
+      user: req.user,
+      errors: ["An error occurred while uploading the file. Please try again."],
+    });
+  }
+}
 
 module.exports = {
   uploadGET,
-  //   messagePOST,
+  uploadPOST,
 };

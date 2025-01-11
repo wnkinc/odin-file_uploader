@@ -15,13 +15,35 @@ model Session {
 }
 
 model User {
-  id                Int     @id @default(autoincrement())
+  id                Int      @id @default(autoincrement())
   firstName         String
   lastName          String
-  username          String  @unique
+  username          String   @unique
   hash              String
   salt              String
-  membership_status Boolean @default(false)
-  admin             Boolean @default(false)
-  email             String  @unique
+  membership_status Boolean  @default(false)
+  admin             Boolean  @default(false)
+  email             String   @unique
+  Folder            Folder[]
+  File              File[]
+}
+
+model Folder {
+  id        Int      @id @default(autoincrement())
+  name      String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  files     File[]
+  createdAt DateTime @default(now())
+}
+
+model File {
+  id        Int      @id @default(autoincrement())
+  name      String
+  path      String
+  folder    Folder   @relation(fields: [folderId], references: [id], onDelete: Cascade)
+  folderId  Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  createdAt DateTime @default(now())
 }

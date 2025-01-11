@@ -12,6 +12,9 @@
       <h1>Upload a File</h1>
       <br />
 
+      <% if (message) { %>
+      <p style="color: green"><%= message %></p>
+      <% } %> <%- include("partials/errors.ejs") %>
       <form action="/upload" method="POST" enctype="multipart/form-data">
         <label for="file">Choose a file to upload:</label>
         <br />
