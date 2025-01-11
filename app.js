@@ -11,9 +11,9 @@ const loginRouter = require("./routes/loginRouter");
 
 const session = require("express-session");
 var passport = require("passport");
-var crypto = require("crypto");
-const pgSession = require("connect-pg-simple")(session);
-const pgPool = require("./db/pool");
+// var crypto = require("crypto");
+// const pgSession = require("connect-pg-simple")(session);
+// const pgPool = require("./db/pool");
 
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 const prisma = require("./prisma/prismaClient");
