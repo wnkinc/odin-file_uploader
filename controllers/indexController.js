@@ -1,4 +1,4 @@
-// indexController.js
+// controllers/indexController.js
 // const db = require("../db/queries");
 
 async function indexGET(req, res) {

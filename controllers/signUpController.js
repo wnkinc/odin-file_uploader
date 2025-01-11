@@ -1,5 +1,6 @@
-// signUpController.js
+// controllers/signUpController.js
 // const db = require("../db/queries");
+const query = require("../queries/user");
 const passport = require("../config/passport");
 const genPassword = require("../config/passwordUtils").genPassword;
 const { validationResult } = require("../config/express-validator");
@@ -39,7 +40,7 @@ async function signUpPOST(req, res) {
     const hash = saltHash.hash;
 
     // Insert the user into the database and get their id
-    const userId = await db.insertUser(
+    const userId = await query.insertUser(
       firstName,
       lastName,
       username,
@@ -49,15 +50,8 @@ async function signUpPOST(req, res) {
       admin
     );
 
-    // Authenticate the user immediately after signup
-    req.login({ id: userId, username }, (err) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ error: "Login failed after sign up." });
-      }
-      // Redirect to the join page or dashboard
-      res.redirect("/join");
-    });
+    // Redirect to the join page or dashboard
+    res.redirect("/");
   } catch (error) {
     // Handle the error, e.g., send a response indicating the username is taken
     if (error.message === "Username already taken") {

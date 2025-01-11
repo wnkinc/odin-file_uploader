@@ -1,4 +1,4 @@
-//  signUpRouter.js
+//  routes/signUpRouter.js
 const { Router } = require("express");
 const signUpController = require("../controllers/signUpController");
 const signUpRouter = Router();

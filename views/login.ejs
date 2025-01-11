@@ -1,0 +1,38 @@
+<!-- views/login.ejs  -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <!-- <link rel="stylesheet" href="/styles.css" /> -->
+  </head>
+  <body>
+    <%- include('./partials/navbar') %>
+    <br />
+    <h1><%= title %></h1>
+    <br />
+    <section class="login">
+      <%- include("partials/errors.ejs") %> <% if (user) { %>
+      <!-- Show the logout button if the user is logged in -->
+      <form action="/logout" method="POST">
+        <button type="submit">Logout</button>
+      </form>
+      <% } else { %>
+      <!-- Show the login form if the user is not logged in -->
+      <form action="/login" method="POST">
+        <div>
+          <label for="username">Username:</label>
+          <input type="text" name="username" id="username" required />
+        </div>
+        <div>
+          <label for="password">Password:</label>
+          <input type="password" name="password" id="password" required />
+        </div>
+        <button type="submit">Login</button>
+      </form>
+      <% } %>
+    </section>
+
+    <br />
+    <%- include('./partials/footer') %>
+  </body>
+</html>
