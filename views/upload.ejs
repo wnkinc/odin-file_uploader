@@ -12,14 +12,47 @@
       <h1>Upload a File</h1>
       <br />
 
-      <% if (message) { %>
-      <p style="color: green"><%= message %></p>
-      <% } %> <%- include("partials/errors.ejs") %>
-      <form action="/upload" method="POST" enctype="multipart/form-data">
+      <!-- Display Folders -->
+      <h2>Your Folders</h2>
+      <ul>
+        <% folders.forEach(folder => { %>
+        <li>
+          <a href="/upload/<%= folder.id %>"><%= folder.name %></a>
+        </li>
+        <% }) %>
+      </ul>
+      <h2>Create New Folder</h2>
+      <form action="/upload/folder" method="POST">
+        <label for="folderName">Folder Name:</label>
+        <input type="text" id="folderName" name="name" required />
+        <button type="submit">Create Folder</button>
+      </form>
+
+      <!-- Display Files in Current Folder -->
+      <% if (currentFolder) { %>
+      <h2>Files in <%= currentFolder.name %></h2>
+      <ul>
+        <% files.forEach(file => { %>
+        <li><%= file.name %></li>
+        <% }) %>
+      </ul>
+      <% } else if (!currentFolder && folders.length > 0) { %>
+      <h2>Folder not found or does not belong to you.</h2>
+      <% } else { %>
+      <h2>Select a folder to view files</h2>
+      <% } %>
+
+      <!-- Messages for upload -->
+      <%- include("partials/errors.ejs") %>
+
+      <!-- Upload Form -->
+      <form
+        action="/upload<%= currentFolder ? '/' + currentFolder.id : '' %>"
+        method="POST"
+        enctype="multipart/form-data"
+      >
         <label for="file">Choose a file to upload:</label>
-        <br />
         <input type="file" id="file" name="file" required />
-        <br /><br />
         <button type="submit">Upload</button>
       </form>
 

@@ -2,6 +2,7 @@
 const query = require("../queries/user");
 const genPassword = require("../config/passwordUtils").genPassword;
 const { validationResult } = require("../config/express-validator");
+const prisma = require("../prisma/prismaClient");
 
 async function signUpGET(req, res) {
   res.render("sign-up", {
@@ -47,6 +48,14 @@ async function signUpPOST(req, res) {
       salt,
       admin
     );
+
+    // Create a default folder for the user
+    await prisma.folder.create({
+      data: {
+        name: "Main Folder",
+        userId: userId,
+      },
+    });
 
     // Redirect to the join page or dashboard
     res.redirect("/");
