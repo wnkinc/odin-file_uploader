@@ -8,6 +8,7 @@ const path = require("path");
 const signUpRouter = require("./routes/signUpRouter");
 const indexRouter = require("./routes/indexRouter");
 const loginRouter = require("./routes/loginRouter");
+const uploadRouter = require("./routes/uploadRouter");
 
 const session = require("express-session");
 var passport = require("passport");
@@ -65,7 +66,9 @@ app.use((req, res, next) => {
  * -------------- ROUTES ----------------
  */
 app.use("/", indexRouter);
+
 app.use("/sign-up", signUpRouter);
+app.use("/upload", uploadRouter);
 
 app.use("/login", loginRouter);
 app.post("/logout", (req, res) => {
