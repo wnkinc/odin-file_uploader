@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/wnkinc/odin-file_uploader#readme",
   "dependencies": {
+    "@azure/storage-blob": "^12.26.0",
     "@prisma/client": "^6.2.1",
     "@quixo3/prisma-session-store": "^3.1.13",
     "dotenv": "^16.4.7",

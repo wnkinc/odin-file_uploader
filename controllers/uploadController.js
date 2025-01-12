@@ -1,5 +1,15 @@
 // controllers/uploadController.js
+const { BlobServiceClient } = require("@azure/storage-blob");
 const prisma = require("../prisma/prismaClient");
+const multer = require("multer");
+require("dotenv").config();
+
+const connectionString = process.env.AZURE_STORAGE_CONNECTION_STRING;
+const containerName = process.env.AZURE_CONTAINER_NAME;
+
+const blobServiceClient =
+  BlobServiceClient.fromConnectionString(connectionString);
+const containerClient = blobServiceClient.getContainerClient(containerName);
 
 async function uploadGET(req, res) {
   const { id } = req.params; // Folder ID (optional)
@@ -77,13 +87,24 @@ async function uploadPOST(req, res) {
     }
 
     // Extract file details
-    const { originalname, path, size } = req.file;
+    const { originalname, buffer, size, mimetype } = req.file;
 
-    // Save file details to the database
+    // Generate a unique name for the file
+    const blobName = Date.now() + "-" + originalname;
+
+    // Upload file to Azure Blob Storage
+    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+    await blockBlobClient.uploadData(buffer, {
+      blobHTTPHeaders: {
+        blobContentType: req.file.mimetype,
+      },
+    });
+
+    // Save file details to the database (storing the blob's URL)
     const file = await prisma.file.create({
       data: {
         name: originalname,
-        path: path,
+        path: blockBlobClient.url, // Store the URL of the blob in the database
         size: size,
         folderId: folderId, // Use the parsed folder ID
         userId: userId, // Associate file with the logged-in user

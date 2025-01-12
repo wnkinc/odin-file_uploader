@@ -4,17 +4,11 @@ const uploadController = require("../controllers/uploadController");
 const fileDetailsController = require("../controllers/fileDetailsController");
 const uploadRouter = Router();
 const multer = require("multer");
+
 const { isAuth } = require("../config/authMiddleware");
 
-// Configure Multer
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/"); // Save files to the "uploads" directory
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname); // Unique filename
-  },
-});
+// Configure Multer to store file data in memory (as a buffer)
+const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 uploadRouter.get("/file/:id", isAuth, fileDetailsController.fileDetailsGET);
