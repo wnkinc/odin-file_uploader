@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <!-- <link rel="stylesheet" href="/styles.css" /> -->
+  </head>
+  <body>
+    <div class="middle">
+      <%- include('./partials/navbar') %>
+      <br />
+      <h1>File Details</h1>
+      <div>
+        <p><strong>Name:</strong> <%= file.name %></p>
+        <p>
+          <strong>Size:</strong> <%= (file.size / (1024 * 1024)).toFixed(2) %>
+          MB
+        </p>
+        <p><strong>Created At:</strong> <%= file.createdAt %></p>
+      </div>
+      <br />
+    </div>
+    <%- include('partials/footer.ejs') %>
+  </body>
+</html>

@@ -73,7 +73,11 @@
       <h2>Files in <%= currentFolder.name %></h2>
       <ul>
         <% files.forEach(file => { %>
-        <li><%= file.name %></li>
+        <li>
+          <%= file.name %>
+          <!-- Add a view link -->
+          <a href="/upload/file/<%= file.id %>">View</a>
+        </li>
         <% }) %>
       </ul>
       <% } else if (!currentFolder && folders.length > 0) { %>

@@ -1,6 +1,7 @@
 //  routes/uploadRouter.js
 const { Router } = require("express");
 const uploadController = require("../controllers/uploadController");
+const fileDetailsController = require("../controllers/fileDetailsController");
 const uploadRouter = Router();
 const multer = require("multer");
 const { isAuth } = require("../config/authMiddleware");
@@ -15,6 +16,8 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage });
+
+uploadRouter.get("/file/:id", isAuth, fileDetailsController.fileDetailsGET);
 
 uploadRouter.post("/folder", isAuth, uploadController.createFolder);
 uploadRouter.post("/folder/:id/delete", isAuth, uploadController.deleteFolder);

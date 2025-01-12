@@ -41,6 +41,7 @@ model File {
   id        Int      @id @default(autoincrement())
   name      String
   path      String
+  size      Float?
   folder    Folder   @relation(fields: [folderId], references: [id], onDelete: Cascade)
   folderId  Int
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)

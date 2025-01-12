@@ -63,7 +63,7 @@ async function uploadPOST(req, res) {
       return res.status(400).send("Invalid folder ID....");
     }
 
-    let folder = await prisma.folder.findUnique({
+    const folder = await prisma.folder.findUnique({
       where: { id: folderId },
     });
 
@@ -76,11 +76,15 @@ async function uploadPOST(req, res) {
       return res.status(403).send("Invalid folder or access denied.");
     }
 
+    // Extract file details
+    const { originalname, path, size } = req.file;
+
     // Save file details to the database
     const file = await prisma.file.create({
       data: {
-        name: req.file.originalname,
-        path: req.file.path,
+        name: originalname,
+        path: path,
+        size: size,
         folderId: folderId, // Use the parsed folder ID
         userId: userId, // Associate file with the logged-in user
       },
