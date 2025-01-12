@@ -4,6 +4,13 @@
   <head>
     <title>Upload File</title>
     <!-- <link rel="stylesheet" href="/styles.css" /> -->
+    <script>
+      // JavaScript to toggle the edit form visibility
+      function toggleEditForm(folderId) {
+        const form = document.getElementById(`edit-form-${folderId}`);
+        form.style.display = form.style.display === "none" ? "inline" : "none";
+      }
+    </script>
   </head>
   <body>
     <div class="middle">
@@ -15,12 +22,45 @@
       <!-- Display Folders -->
       <h2>Your Folders</h2>
       <ul>
-        <% folders.forEach(folder => { %>
+        <% folders.forEach((folder, index) => { %>
         <li>
           <a href="/upload/<%= folder.id %>"><%= folder.name %></a>
+
+          <% if (index !== 0) { %>
+          <!-- Add Edit and Delete for all except the first folder -->
+          <!-- Edit and Delete Buttons -->
+          <a href="#" class="button" onclick="toggleEditForm(<%= folder.id %>)"
+            >Edit</a
+          >
+          <form
+            action="/upload/folder/<%= folder.id %>/delete"
+            method="POST"
+            style="display: inline"
+          >
+            <button type="submit" class="button">Delete</button>
+          </form>
+
+          <!-- Edit Folder Form (Hidden by default) -->
+          <form
+            id="edit-form-<%= folder.id %>"
+            action="/upload/folder/<%= folder.id %>/edit"
+            method="POST"
+            style="display: none; margin-left: 10px"
+          >
+            <input
+              type="text"
+              name="name"
+              value="<%= folder.name %>"
+              placeholder="New folder name"
+              required
+            />
+            <button type="submit">Save</button>
+          </form>
+          <% } %>
         </li>
         <% }) %>
       </ul>
+
       <h2>Create New Folder</h2>
       <form action="/upload/folder" method="POST">
         <label for="folderName">Folder Name:</label>

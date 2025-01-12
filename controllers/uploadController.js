@@ -133,9 +133,38 @@ async function deleteFolder(req, res) {
   }
 }
 
+async function editFolder(req, res) {
+  const { id } = req.params; // Folder ID from the route parameter
+  const { name } = req.body; // New folder name from the form input
+
+  try {
+    // Fetch the folder to ensure it exists and belongs to the user
+    const folder = await prisma.folder.findUnique({
+      where: { id: parseInt(id, 10) },
+    });
+
+    if (!folder || folder.userId !== req.user.id) {
+      return res.status(403).send("Invalid folder or access denied.");
+    }
+
+    // Update the folder name
+    await prisma.folder.update({
+      where: { id: parseInt(id, 10) },
+      data: { name: name },
+    });
+
+    // Redirect to the upload page after editing the folder
+    res.redirect("/upload");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("An error occurred while editing the folder.");
+  }
+}
+
 module.exports = {
   uploadGET,
   uploadPOST,
   createFolder,
   deleteFolder,
+  editFolder,
 };
