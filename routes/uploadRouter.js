@@ -18,6 +18,11 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 uploadRouter.get("/file/:id", isAuth, fileDetailsController.fileDetailsGET);
+uploadRouter.get(
+  "/file/:id/download",
+  isAuth,
+  fileDetailsController.fileDownloadGET
+);
 
 uploadRouter.post("/folder", isAuth, uploadController.createFolder);
 uploadRouter.post("/folder/:id/delete", isAuth, uploadController.deleteFolder);
