@@ -5,6 +5,9 @@ const multer = require("multer");
 require("dotenv").config();
 
 const connectionString = process.env.AZURE_STORAGE_CONNECTION_STRING;
+if (!connectionString) {
+  throw new Error("Azure Storage connection string is not defined");
+}
 const containerName = process.env.AZURE_CONTAINER_NAME;
 
 const blobServiceClient =
