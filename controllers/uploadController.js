@@ -4,14 +4,24 @@ const prisma = require("../prisma/prismaClient");
 const multer = require("multer");
 require("dotenv").config();
 
+// Log the connection string to verify it is loaded
+console.log("Connection String:", process.env.AZURE_STORAGE_CONNECTION_STRING);
+
 const connectionString = process.env.AZURE_STORAGE_CONNECTION_STRING;
 if (!connectionString) {
   throw new Error("Azure Storage connection string is not defined");
 }
 const containerName = process.env.AZURE_CONTAINER_NAME;
+console.log("Container Name:", containerName);
 
 const blobServiceClient =
   BlobServiceClient.fromConnectionString(connectionString);
+if (!blobServiceClient) {
+  throw new Error("Failed to create BlobServiceClient.");
+}
+
+console.log("BlobServiceClient created successfully");
+
 const containerClient = blobServiceClient.getContainerClient(containerName);
 
 async function uploadGET(req, res) {
