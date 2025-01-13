@@ -1,0 +1,4 @@
+{
+  "appService.defaultWebAppToDeploy": "/subscriptions/d9b8b5be-f918-4627-82a8-4002d025f5f3/resourceGroups/odin-file_uploader/providers/Microsoft.Web/sites/odinfileuploader",
+  "appService.deploySubpath": "."
+}
